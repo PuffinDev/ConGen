@@ -13,6 +13,13 @@ weights = {
     "C": [11, 4, 4, 3, 11, 3, 2, 10, 5, 2, 1, 5],
 }
 
+# replaces text in the generated words
+rewrites = {
+    "aa": "à",
+    "hg": "ĥ",
+    "zh": "ž"
+}
+
 # specifies how words will be selected
 # anything in (parentheses) has a 50% chance of being included
 # /slashes indicate either the stuff on the left or the right will be included, but not both
@@ -20,7 +27,7 @@ weights = {
 pattern = "CV(C)/VC(VC)(V)"
 
 # generates a list of words
-words = wordgen.generate_words(10, pattern, groups, weights=weights)
+words = wordgen.generate_words(10, pattern, groups, weights=weights, rewrites=rewrites)
 # creates fake sentances
 pseudotext = wordgen.generate_pseudotext(words)
 

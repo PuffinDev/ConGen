@@ -32,6 +32,12 @@ def parse_parentheses(s):
     else:
         return groups
 
+def apply_rewrites(text, rewrites):
+    for original, rewriten in rewrites.items():
+        text = text.replace(original, rewriten)
+
+    return text
+
 def evaluate(value, letter_groups, probability=PROBIBILITY, weights=False, first_level=False):
     result = ""
 
@@ -62,10 +68,10 @@ def evaluate(value, letter_groups, probability=PROBIBILITY, weights=False, first
 
     return result
 
-def generate_word(pattern, letter_groups, weights=False):
+def generate_word(pattern, letter_groups, weights=False, rewrites={}):
     pattern = parse_parentheses(pattern)
     result = ""
-    result += evaluate(pattern, letter_groups, weights=weights, first_level=True)
+    result += apply_rewrites(evaluate(pattern, letter_groups, weights=weights, first_level=True), rewrites)
     return result
 
 def generate_pseudotext(words, max_sentance_len=15):
@@ -90,10 +96,10 @@ def generate_pseudotext(words, max_sentance_len=15):
 
     return pseudotext
 
-def generate_words(amount, pattern, letter_groups, weights=False):
+def generate_words(amount, pattern, letter_groups, weights=False, rewrites={}):
     words = []
     for i in range(amount):
-        words.append(generate_word(pattern, letter_groups, weights=weights))
+        words.append(generate_word(pattern, letter_groups, weights=weights, rewrites=rewrites))
 
     return words
 
