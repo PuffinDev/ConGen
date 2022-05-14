@@ -1,0 +1,99 @@
+import random
+
+PROBIBILITY = 0.5 # probability of including values inside parentheses
+WORD_AMOUNT = 100 # amount of words to genarate
+FILTER_DUPLICATES = True
+
+def push(obj, l, depth):
+    while depth:
+        l = l[-1]
+        depth -= 1
+
+    l.append(obj)
+
+def parse_parentheses(s):
+    groups = []
+    depth = 0
+
+    try:
+        for char in s:
+            if char == '(':
+                push([], groups, depth)
+                depth += 1
+            elif char == ')':
+                depth -= 1
+            else:
+                push(char, groups, depth)
+    except IndexError:
+        raise ValueError('Parentheses mismatch')
+
+    if depth > 0:
+        raise ValueError('Parentheses mismatch')
+    else:
+        return groups
+
+def evaluate(value, letter_groups, probability=PROBIBILITY, weights=False, first_level=False):
+    result = ""
+
+    if type(value) == str:
+        if value in letter_groups:
+            if weights == True:
+                weights = list(range(len(letter_groups[value]), 0, -1))
+                result += random.sample(letter_groups[value], k=1, counts=weights)[0]
+            elif weights:
+                result += random.sample(letter_groups[value], k=1, counts=weights[value])[0]
+            else:
+                result += random.choice(letter_groups[value])
+        else:
+            result += value
+    else:
+        if random.random() < probability or first_level:
+            if "/" in value:
+                index = value.index("/")
+                v1, v2 = value[:index], value[index+1:]
+
+                if random.randint(0, 1) == 1:
+                    value = v1
+                else:
+                    value = v2
+
+            for subval in value:
+                result += evaluate(subval, letter_groups, weights=weights)
+
+    return result
+
+def generate_word(pattern, letter_groups, weights=False):
+    pattern = parse_parentheses(pattern)
+    result = ""
+    result += evaluate(pattern, letter_groups, weights=weights, first_level=True)
+    return result
+
+def generate_pseudotext(words, max_sentance_len=15):
+    pseudotext = ""
+    sentence_len = random.randint(1, max_sentance_len)
+    i = 0
+    for j, word in enumerate(words):
+        i += 1
+
+        if i == 1:
+            pseudotext += word.capitalize()
+
+        elif i-1 >= sentence_len or j == len(words)-1:
+            sentence_len = random.randint(1, max_sentance_len)
+            pseudotext += word + random.choice(["!", ".", ".", ".", "?"])
+            i = 0
+
+        else:
+            pseudotext += word
+
+        pseudotext += " "
+
+    return pseudotext
+
+def generate_words(amount, pattern, letter_groups, weights=False):
+    words = []
+    for i in range(amount):
+        words.append(generate_word(pattern, letter_groups, weights=weights))
+
+    return words
+
