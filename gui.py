@@ -2,40 +2,47 @@ import wordgen
 
 from tkinter import *
 
-# letter groups can be referenced with their identifiers in the pattern, 
-# and a random char will be picked.
-groups = {
-    "V": ["a", "y", "e", "u", "aa", "o"],
-    "C": ["v", "j", "z", "zh", "s", "r", "hg", "n", "d", "vv", "l", "g"]
-}
-
-# weights change the chances of a letter being picked.
-weights = {
-    "V": [8, 9, 5, 8, 5, 5],
-    "C": [8, 4, 4, 3, 8, 3, 2, 6, 5, 2, 1, 5],
-}
-
-# replaces text in the generated words
-rewrites = {
-    "aa": "à",
-    "hg": "ĥ",
-    "zh": "ž"
-}
-
-# pattern = "CV(C)/VC(VC)(V)"
-
-
 def gen_words():
     pattern = e1.get()
     if not pattern:
         return
     amt = s1.get()
 
-    words = wordgen.generate_words(amt, pattern, groups, weights=weights, rewrites=rewrites)
+    groups, weights = read_letter_groups()
+    print(weights)
+
+    words = wordgen.generate_words(amt, pattern, groups, weights=weights)
     pseudotext = wordgen.generate_pseudotext(words)
 
-    t1.delete("1.0", END)
-    t1.insert(END, pseudotext)
+    t2.delete("1.0", END)
+    t2.insert(END, pseudotext)
+
+def read_letter_groups():
+    group_text = t1.get("1.0", END).replace(" ", "")
+    groups = {}
+    weights = {}
+
+    for line in group_text.split("\n"):
+        if ":" not in line:
+            continue
+        group, letters = line.split(":", 1)
+        groups[group] = []
+        weights[group] = []
+
+        for letter in letters.split(","):
+            if "-" in letter:
+                letter, weight = letter.split("-")
+                weight = int(weight)
+                groups[group].append(letter)
+                weights[group].append(weight)
+            else:
+                groups[group].append(letter)
+                weights[group].append(0)
+
+        if not any(weights[group]):
+            weights[group] = [1 for _ in weights[group]]
+
+    return groups, weights
 
 root = Tk()
 root.geometry("500x600")
@@ -50,16 +57,21 @@ l2.pack()
 pat = IntVar()
 e1 = Entry(font=("", 13), text=pat)
 pat.set("CV(CV)(C)/VC(VC)(V)")
-e1.pack(pady=(5, 10))
+e1.pack(pady=(5, 5))
 
 s1 = Scale(orient=HORIZONTAL, from_=1, to=150)
-s1.pack(pady=(5, 10))
+s1.set(50)
+s1.pack(pady=(5, 5))
+
+t1 = Text(height=5, width=60, font=("", 13))
+t1.insert("1.0", "C: p, t, k, s, m, n\nV: a, i, u")
+t1.pack(pady=(5, 5))
 
 b1 = Button(text="Generate!", font=("", 13), command=gen_words)
 b1.pack(pady=(0, 20))
 
-t1 = Text(wrap=WORD, font=("", 14))
-t1.pack()
+t2 = Text(wrap=WORD, font=("", 14))
+t2.pack()
 
 
 root.mainloop()
