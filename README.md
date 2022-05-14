@@ -1,6 +1,7 @@
 # ConGen
 
 Congen genarates made-up words for conlangs using patterns and character groups.
+Congen also creates pseudotext (fake sentances) so you can see what the words would look like in a text.
 
 # Examples
 
@@ -20,5 +21,8 @@ This pattern generates words with Either one consonant and one vowel with 2 opti
 Example output:
 
 ```
-Ipum inap atu pusi ukat na ikup! Tusa apu iku apap tatimi anik asu. Usa pa! Apam upik sutata nisu uku ka amu sipu isu namu? Mu imi ikun nina ki aman pati kakita? Apip amu simuma tamu! Apim ku puti. Pa uki.
+Ipum inap atu pusi ukat na ikup! Tusa apu iku apap tatimi anik asu.
+Usa pa! Apam upik sutata nisu uku ka amu sipu isu namu?
+Mu imi ikun nina ki aman pati kakita?
+Apip amu simuma tamu! Apim ku puti. Pa uki.
 ```
