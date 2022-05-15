@@ -3,6 +3,8 @@ from congen import wordgen, cgg_parser
 from tkinter import *
 from tkinter import filedialog
 
+from threading import Thread
+
 def gen_words():
     pattern = e1.get()
     if not pattern:
@@ -16,6 +18,22 @@ def gen_words():
 
     t2.delete("1.0", END)
     t2.insert(END, pseudotext)
+
+def highlight():
+    highlighting = {"->": "rewrite_arrow", "([A-Z]):": "group_name", "\d+": "weight", "-\d": "weight"}
+    last_indexes = {}
+    while True:
+        for text, tag in highlighting.items():
+            index = t1.search(text, last_indexes[text] if text in last_indexes.keys() else "1.0", regexp=True)
+            if not index:
+                continue
+
+            line, char = index.split(".")
+            end_index = f"{line}.{int(char)+2}"
+
+            t1.tag_add(tag, index, end_index)
+            last_indexes[text] = end_index
+
 
 def open_file():
     file = filedialog.askopenfilename(filetypes=(
@@ -51,6 +69,9 @@ b2 = Button(text="Open a file", font=("", 10), command=open_file)
 b2.pack(pady=(5, 5))
 
 t1 = Text(height=5, width=60, font=("", 13))
+t1.tag_configure("rewrite_arrow", foreground="green")
+t1.tag_configure("group_name", foreground="red")
+t1.tag_configure("weight", foreground="blue")
 t1.insert("1.0", "C: p, t, k, s, m, n\nV: a, i, u")
 t1.pack(pady=(5, 5))
 
@@ -60,5 +81,8 @@ b1.pack(pady=(0, 20))
 t2 = Text(wrap=WORD, font=("", 14))
 t2.pack()
 
+
+thread = Thread(target=highlight, daemon=True)
+thread.start()
 
 root.mainloop()
