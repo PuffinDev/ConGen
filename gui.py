@@ -9,7 +9,6 @@ def gen_words():
     amt = s1.get()
 
     groups, weights = read_letter_groups()
-    print(weights)
 
     words = wordgen.generate_words(amt, pattern, groups, weights=weights)
     pseudotext = wordgen.generate_pseudotext(words)
