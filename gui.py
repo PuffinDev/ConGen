@@ -9,9 +9,9 @@ def gen_words():
         return
     amt = s1.get()
 
-    groups, weights = cgg_parser.parse_cgg(t1.get("1.0", END))
+    groups, weights, rewrites = cgg_parser.parse_cgg(t1.get("1.0", END))
 
-    words = wordgen.generate_words(amt, pattern, groups, weights=weights)
+    words = wordgen.generate_words(amt, pattern, groups, weights=weights, rewrites=rewrites)
     pseudotext = wordgen.generate_pseudotext(words)
 
     t2.delete("1.0", END)
