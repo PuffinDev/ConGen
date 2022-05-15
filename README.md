@@ -35,6 +35,12 @@ C: v-11, j-4, z-4, zh-3, s-11, r-3, hg-2, n-10, d-5, vv-2, l-1, g-5
 aa->à, hg->ĥ, zh->ž
 ```
 
+Output:
+
+```Roža onosu nu oduv ud avvuz on ej ovanu. Sy vosod žyn jàž sàž ajyv vyvu do vàrud evveĥà asyv žysu yza vyjaĥ ežav. Àvu vyĥa an àr nadav ug no vožà. Suden vadon. Von ovy và gy. Az và uvvy ny nos ogovu nun ovy àseg savva us vy.```
+
+<br/>
+
 ## wordgen.py library
 
 ```py
