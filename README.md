@@ -1,9 +1,28 @@
 # ConGen
 
 Congen genarates made-up words for conlangs using patterns and character groups.
-Congen also creates pseudotext (fake sentances) so you can see what the words would look like in a text.
+Congen also creates pseudotext (fake sentences) so you can see what the words would look like in a text.
 
-# Examples
+# Features
+
+- An python library for generating words and text
+- Easy to use GUI
+- Weighted chances of spesific letters
+- Advanced patterns with probabilities and groups
+- Pseudotext generation
+- IPA translation
+
+<br/>
+
+## Gui
+
+Run `gui.py` to use the interface.
+
+<img src="images/screenshot.png" style="width: 50%; height: 50%"></img>
+
+<br/>
+
+## wordgen.py library
 
 ```py
 groups = {
