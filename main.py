@@ -1,4 +1,5 @@
 import wordgen
+import tts
 
 # letter groups can be referenced with their identifiers in the pattern, 
 # and a random char will be picked.
@@ -27,8 +28,18 @@ rewrites = {
 pattern = "CV(C)/VC(VC)(V)"
 
 # generates a list of words
-words = wordgen.generate_words(10, pattern, groups, weights=weights, rewrites=rewrites)
+words = wordgen.generate_words(100, pattern, groups, weights=weights, rewrites=rewrites)
 # creates fake sentances
 pseudotext = wordgen.generate_pseudotext(words)
-
 print(pseudotext)
+
+# display IPA translation:
+
+# ipa = {
+#     "a": "a", "y": "i", "e": "æ", "u": "ə", "à": "ɑ", "o": "o",
+#     "v": "v", "j": "h", "z": "z", "ž": "ʐ", "s": "s", "r": "r",
+#     "ĥ": "x", "n": "n", "d": "d", "vv": "v", "l": "ɭ", "g": "ɡ"
+# }
+
+# print("\nIPA: " + tts.text_to_ipa(pseudotext, ipa))
+
