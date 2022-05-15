@@ -40,13 +40,16 @@ def open_file():
         ('congen group files', '*.cgg'),
         ('All files', '*.*')
     ), initialdir="cggs/")
-    with open(file) as f:
-        text = f.read()
-        t1.delete("1.0", END)
-        t1.insert("1.0", text)
+    try:
+        with open(file) as f:
+            text = f.read()
+            t1.delete("1.0", END)
+            t1.insert("1.0", text)
+    except Exception:
+        pass
 
 root = Tk()
-root.geometry("500x700")
+root.geometry("500x698")
 root.resizable(False, False)
 root.title("ConGen word generator")
 
@@ -63,12 +66,12 @@ e1.pack(pady=(5, 5))
 
 s1 = Scale(orient=HORIZONTAL, from_=1, to=150)
 s1.set(50)
-s1.pack(pady=(5, 5))
+s1.pack(pady=(5, 10))
 
 b2 = Button(text="Open a file", font=("", 10), command=open_file)
 b2.pack(pady=(5, 5))
 
-t1 = Text(height=5, width=60, font=("", 13))
+t1 = Text(height=5, width=44, font=("", 13))
 t1.tag_configure("rewrite_arrow", foreground="green")
 t1.tag_configure("group_name", foreground="red")
 t1.tag_configure("weight", foreground="blue")
@@ -78,7 +81,7 @@ t1.pack(pady=(5, 5))
 b1 = Button(text="Generate!", font=("", 13), command=gen_words)
 b1.pack(pady=(0, 20))
 
-t2 = Text(wrap=WORD, font=("", 14))
+t2 = Text(wrap=WORD, font=("", 14), width=43, height=10)
 t2.pack()
 
 
