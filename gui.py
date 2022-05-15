@@ -1,4 +1,4 @@
-import wordgen
+from congen import wordgen
 
 from tkinter import *
 

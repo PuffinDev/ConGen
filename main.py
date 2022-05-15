@@ -1,4 +1,4 @@
-import wordgen
+from congen import wordgen
 import tts
 
 # letter groups can be referenced with their identifiers in the pattern, 
