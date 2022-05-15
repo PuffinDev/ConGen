@@ -28,8 +28,9 @@ def open_file():
         t1.insert("1.0", text)
 
 root = Tk()
-root.geometry("500x600")
+root.geometry("500x700")
 root.resizable(False, False)
+root.title("ConGen word generator")
 
 l1 = Label(text="ConGen", font=("", 17))
 l1.pack(pady=(5, 10))
