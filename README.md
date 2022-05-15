@@ -45,3 +45,16 @@ Usa pa! Apam upik sutata nisu uku ka amu sipu isu namu?
 Mu imi ikun nina ki aman pati kakita?
 Apip amu simuma tamu! Apim ku puti. Pa uki.
 ```
+
+## Cgg files
+
+Cgg files contain ConGen letter Groups (or cgg's). They can be loaded into the Gui from a file, or typed directly into the text box. In cgg text you can create groups of letters, assign weights and create rewrites.
+
+Example:
+
+```hs // hs is being used because it provides hilighting of group names and weights
+V: a-8, y-11, e-4, u-8, aa-5, o-5
+C: v-11, j-4, z-4, zh-3, s-11, r-3, hg-2, n-10, d-5, vv-2, l-1, g-5
+
+aa->à, hg->ĥ, zh->ž
+```
