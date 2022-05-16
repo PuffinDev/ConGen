@@ -5,12 +5,14 @@ Congen also creates pseudotext (fake sentences) so you can see what the words wo
 
 # Features
 
-- An python library for generating words and text
+- An python library for generating words & text
 - Easy to use GUI
+- Load & save config from files
 - Weighted chances of spesific letters
-- Advanced patterns with probabilities and groups
+- Advanced patterns with probabilities & groups
 - Pseudotext generation
 - IPA translation
+- Rewrites / character replacement
 
 <br/>
 
@@ -18,7 +20,7 @@ Congen also creates pseudotext (fake sentences) so you can see what the words wo
 
 Run `gui.py` to use the interface.
 
-<img src="images/screenshot.png" style="width: 50%; height: 50%"></img>
+<img src="images/screenshot.png" style="width: 50%; height: 60%"></img>
 
 <br/>
 
