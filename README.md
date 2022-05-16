@@ -24,6 +24,16 @@ Run `gui.py` to use the interface.
 
 <br/>
 
+## Patterns
+
+The pattern specifies what order characters will be in to generate words. As an example, the pattern `"CV(CV)(CV)/VCV(C)" generates words with either one consonant and one vowel with 2 optional repetitions, or a vowel, a consonant and a vowel with an optional last consonant. 
+
+`(x)` Only includes x in a word 50% of the time
+
+`x/y` Either includes x or y
+
+<br/>
+
 ## Cgg files
 
 Cgg (congen groups) files contain letter groups and rewrites. They can be loaded into the Gui from a file, or typed directly into the text box. In cgg text you can create groups of letters, assign weights and create rewrites.
@@ -45,20 +55,27 @@ Output:
 
 ## wordgen.py library
 
+The wordgen library can be used to quickly generate words from any python file.
+
+
+Here is an example of the usage:
 ```py
+from congen import wordgen
+
 groups = {
     "C": ["p", "t", "k", "s", "m", "n"],
     "V": ["a", "i", "u"]
 }
-```
 
-```py
 pattern = "CV(CV)(CV)/VCV(C)"
+
+words = wordgen.generate_words(100, pattern, groups, weights=weights, rewrites=rewrites)
+
+pseudotext = wordgen.generate_pseudotext(words)
+print(pseudotext)
 ```
 
-This pattern generates words with Either one consonant and one vowel with 2 optional repetitions, or a vowel, a consonant and a vowel with an optional last consonant.
-
-Example output:
+Output:
 
 ```
 Ipum inap atu pusi ukat na ikup! Tusa apu iku apap tatimi anik asu.
