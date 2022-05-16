@@ -26,7 +26,7 @@ Run `gui.py` to use the interface.
 
 ## Patterns
 
-The pattern specifies what order characters will be in to generate words. As an example, the pattern `"CV(CV)(CV)/VCV(C)" generates words with either one consonant and one vowel with 2 optional repetitions, or a vowel, a consonant and a vowel with an optional last consonant. 
+The pattern specifies what order characters will be in to generate words. As an example, the pattern `CV(CV)(CV)/VCV(C)` generates words with either one consonant and one vowel with 2 optional repetitions, or a vowel, a consonant and a vowel with an optional last consonant. 
 
 `(x)` Only includes x in a word 50% of the time
 
