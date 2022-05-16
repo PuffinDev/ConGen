@@ -1,7 +1,7 @@
 from congen import wordgen, cgg_parser
 
 from tkinter import *
-from tkinter import filedialog
+from tkinter import filedialog, simpledialog
 
 from threading import Thread
 
@@ -40,12 +40,34 @@ def open_file():
         ('congen group files', '*.cgg'),
         ('All files', '*.*')
     ), initialdir="cggs/")
+    if file == "":
+        return
+
     try:
         with open(file) as f:
             text = f.read()
             t1.delete("1.0", END)
             t1.insert("1.0", text)
-    except Exception:
+    except Exception as e:
+        simpledialog.messagebox.showerror("Error", e)
+        print(e)
+        pass
+
+def save_file():
+    file = filedialog.asksaveasfile(filetypes=(
+        ('congen group files', '*.cgg'),
+        ('All files', '*.*')
+    ), initialdir="cggs/")
+    if not file:
+        return
+
+    try:
+        with open(file.name, "w") as f:
+            f.write(t1.get("1.0", END))
+        simpledialog.messagebox.showinfo("Info", "Saved letter groups to " + file.name)
+    except Exception as e:
+        simpledialog.messagebox.showerror("Error", e)
+        print(e)
         pass
 
 root = Tk()
@@ -65,7 +87,7 @@ t1.grid(pady=(5, 5), row=1, columnspan=2)
 b2 = Button(text="Load", font=("", 10), command=open_file)
 b2.grid(pady=(5, 5), column=0, row=2)
 
-b3 = Button(text="Save", font=("", 10))
+b3 = Button(text="Save", font=("", 10), command=save_file)
 b3.grid(pady=(5, 5), column=1, row=2)
 
 l2 = Label(text="Pattern", font=("", 11))
