@@ -49,40 +49,48 @@ def open_file():
         pass
 
 root = Tk()
-root.geometry("500x698")
-root.resizable(False, False)
+root.config()
 root.title("ConGen word generator")
 
 l1 = Label(text="ConGen", font=("", 17))
-l1.pack(pady=(5, 10))
+l1.grid(pady=(5, 5), row=0, columnspan=2)
 
-l2 = Label(text="Pattern", font=("", 13))
-l2.pack()
-
-pat = IntVar()
-e1 = Entry(font=("", 13), text=pat)
-pat.set("CV(CV)(C)/VC(VC)(V)")
-e1.pack(pady=(5, 5))
-
-s1 = Scale(orient=HORIZONTAL, from_=1, to=150)
-s1.set(50)
-s1.pack(pady=(5, 10))
-
-b2 = Button(text="Open a file", font=("", 10), command=open_file)
-b2.pack(pady=(5, 5))
-
-t1 = Text(height=5, width=44, font=("", 13))
+t1 = Text(height=15, width=44, font=("", 13))
 t1.tag_configure("rewrite_arrow", foreground="green")
 t1.tag_configure("group_name", foreground="red")
 t1.tag_configure("weight", foreground="blue")
 t1.insert("1.0", "C: p, t, k, s, m, n\nV: a, i, u")
-t1.pack(pady=(5, 5))
+t1.grid(pady=(5, 5), row=1, columnspan=2)
+
+b2 = Button(text="Load", font=("", 10), command=open_file)
+b2.grid(pady=(5, 5), column=0, row=2)
+
+b3 = Button(text="Save", font=("", 10))
+b3.grid(pady=(5, 5), column=1, row=2)
+
+l2 = Label(text="Pattern", font=("", 11))
+l2.grid(columnspan=2)
+
+pat = IntVar()
+e1 = Entry(font=("", 13), text=pat)
+pat.set("CV(CV)(C)/VC(VC)(V)")
+e1.grid(columnspan=2)
+
+l2 = Label(text="Words", font=("", 11))
+l2.grid(columnspan=2)
+
+s1 = Scale(orient=HORIZONTAL, from_=1, to=300)
+s1.set(50)
+s1.grid(row=5, columnspan=2)
 
 b1 = Button(text="Generate!", font=("", 13), command=gen_words)
-b1.pack(pady=(0, 20))
+b1.grid(pady=(0, 20), columnspan=2)
 
-t2 = Text(wrap=WORD, font=("", 14), width=43, height=10)
-t2.pack()
+l4 = Label(text="Output", font=("", 13))
+l4.grid(column=2, row=0, pady=(2, 0))
+
+t2 = Text(wrap=WORD, font=("", 14), width=43)
+t2.grid(column=2, row=1, padx=(10, 10), pady=(5, 10), rowspan=8)
 
 
 thread = Thread(target=highlight, daemon=True)
