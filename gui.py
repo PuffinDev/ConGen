@@ -19,21 +19,26 @@ def gen_words():
     t2.delete("1.0", END)
     t2.insert(END, pseudotext)
 
-def highlight():
+def highlight(*args):
     highlighting = {"->": "rewrite_arrow", "([A-Z]):": "group_name", "\d+": "weight", "-\d": "weight"}
     last_indexes = {}
-    while True:
-        for text, tag in highlighting.items():
+
+    for text, tag in highlighting.items():
+        done = []
+        while True:
+            print(text, tag)
             index = t1.search(text, last_indexes[text] if text in last_indexes.keys() else "1.0", regexp=True)
-            if not index:
-                continue
+            if not index or index in done:
+                break
 
             line, char = index.split(".")
             end_index = f"{line}.{int(char)+2}"
 
             t1.tag_add(tag, index, end_index)
             last_indexes[text] = end_index
+            done.append(index)
 
+        done.clear()
 
 def open_file():
     file = filedialog.askopenfilename(filetypes=(
@@ -48,6 +53,7 @@ def open_file():
             text = f.read()
             t1.delete("1.0", END)
             t1.insert("1.0", text)
+            highlight()
     except Exception as e:
         simpledialog.messagebox.showerror("Error", e)
         print(e)
@@ -82,6 +88,8 @@ t1.tag_configure("rewrite_arrow", foreground="green")
 t1.tag_configure("group_name", foreground="red")
 t1.tag_configure("weight", foreground="blue")
 t1.insert("1.0", "C: p, t, k, s, m, n\nV: a, i, u")
+highlight()
+t1.bind_all('<Key>', highlight)
 t1.grid(pady=(5, 5), row=1, columnspan=2)
 
 b2 = Button(text="Load", font=("", 10), command=open_file)
@@ -113,9 +121,5 @@ l4.grid(column=2, row=0, pady=(2, 0))
 
 t2 = Text(wrap=WORD, font=("", 14), width=43)
 t2.grid(column=2, row=1, padx=(10, 10), pady=(5, 10), rowspan=8)
-
-
-thread = Thread(target=highlight, daemon=True)
-thread.start()
 
 root.mainloop()
