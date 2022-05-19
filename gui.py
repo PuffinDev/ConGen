@@ -1,4 +1,4 @@
-from congen import wordgen, cgg_parser
+from congen import wordgen, cgg_parser, pseudotextgen
 
 from tkinter import *
 from tkinter import filedialog, simpledialog
@@ -14,7 +14,7 @@ def gen_words():
     groups, weights, rewrites = cgg_parser.parse_cgg(t1.get("1.0", END))
 
     words = wordgen.generate_words(amt, pattern, groups, weights=weights, rewrites=rewrites)
-    pseudotext = wordgen.generate_pseudotext(words)
+    pseudotext = pseudotextgen.generate_pseudotext(words)
 
     t2.delete("1.0", END)
     t2.insert(END, pseudotext)

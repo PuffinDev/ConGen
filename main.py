@@ -1,4 +1,4 @@
-from congen import wordgen
+from congen import wordgen, pseudotextgen
 import tts
 
 # letter groups can be referenced with their identifiers in the pattern, 
@@ -30,7 +30,7 @@ pattern = "CV(C)/VC(VC)(V)"
 # generates a list of words
 words = wordgen.generate_words(100, pattern, groups, weights=weights, rewrites=rewrites)
 # creates fake sentances
-pseudotext = wordgen.generate_pseudotext(words)
+pseudotext = pseudotextgen.generate_pseudotext(words)
 print(pseudotext)
 
 # display IPA translation:
