@@ -26,7 +26,6 @@ def highlight(*args):
     for text, tag in highlighting.items():
         done = []
         while True:
-            print(text, tag)
             index = t1.search(text, last_indexes[text] if text in last_indexes.keys() else "1.0", regexp=True)
             if not index or index in done:
                 break
