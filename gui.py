@@ -38,6 +38,9 @@ def highlight(*args):
     highlighting = {"->": "rewrite_arrow", "([A-Z]):": "group_name", "\d+": "weight", "-\d": "weight", "//": "comment"}
     last_indexes = {}
 
+    for _, tag in highlighting.items():
+        t1.tag_remove(tag, "1.0", "end")
+
     for text, tag in highlighting.items():
         done = []
         while True:
@@ -46,9 +49,11 @@ def highlight(*args):
                 break
 
             line, char = index.split(".")
-            if tag != "comment":
+            if tag == "weight":
+                end_index = f"{line}.{int(char)+1}"
+            elif tag in ["rewrite_arrow", "group_name"]:
                 end_index = f"{line}.{int(char)+2}"
-            else:
+            elif tag == "comment":
                 txt = t1.get("1.0", END).split('\n')
                 end_index = f"{line}.{len(txt[int(line)-1])}"
 
