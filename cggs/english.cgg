@@ -1,2 +1,5 @@
+// Basic representation of english w/ accurate letter frequencies.
+
 C: b-15, c-28, d-43, f-22, g-20, h-61, j-2, k-8, l-40, m-24, n-67, p-19, q-1, r-60, s-64, t-91, v-10, w-24, x-2, y-20, z-1
 V: a-82, e-127, i-70, o-75, u-28
+

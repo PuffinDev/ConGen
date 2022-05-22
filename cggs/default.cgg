@@ -1,2 +1,9 @@
-C: p, t, k, s, m, n
-V: a, i, u
+// This is where you can edit groups, weights and rewrites using cgg script (congen groups)
+
+// You can easily save .cgg files for use later with the "Load" and "Save" buttons.
+
+C: p, t, k, s, m, n // Consonant group
+V: a-4, i-3, u-2 // Vowel group (with weights)
+
+// Anything after two slashes is a comment
+// Try opening intvardian.cgg for a more advanced example.
