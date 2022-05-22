@@ -10,6 +10,12 @@ def parse_cgg(text):
     rewrites = {}
 
     for line in groups_text.split("\n"):
+        if "//" in line:
+            if line[:1] == "//":
+                continue
+            else:
+                line = line.split("//", 1)[0]
+
         if ":" in line:
             group, letters = line.split(":", 1)
             groups[group] = []
