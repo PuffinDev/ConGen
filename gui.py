@@ -20,7 +20,7 @@ def gen_words():
     t2.insert(END, pseudotext)
 
 def highlight(*args):
-    highlighting = {"->": "rewrite_arrow", "([A-Z]):": "group_name", "\d+": "weight", "-\d": "weight"}
+    highlighting = {"->": "rewrite_arrow", "([A-Z]):": "group_name", "\d+": "weight", "-\d": "weight", "//": "comment"}
     last_indexes = {}
 
     for text, tag in highlighting.items():
@@ -31,7 +31,11 @@ def highlight(*args):
                 break
 
             line, char = index.split(".")
-            end_index = f"{line}.{int(char)+2}"
+            if tag != "comment":
+                end_index = f"{line}.{int(char)+2}"
+            else:
+                txt = t1.get("1.0", END).split('\n')
+                end_index = f"{line}.{len(txt[int(line)-1])}"
 
             t1.tag_add(tag, index, end_index)
             last_indexes[text] = end_index
@@ -86,6 +90,7 @@ t1 = Text(height=15, width=44, font=("", 13))
 t1.tag_configure("rewrite_arrow", foreground="green")
 t1.tag_configure("group_name", foreground="red")
 t1.tag_configure("weight", foreground="blue")
+t1.tag_configure("comment", foreground="grey")
 t1.insert("1.0", "C: p, t, k, s, m, n\nV: a, i, u")
 highlight()
 t1.bind_all('<Key>', highlight)
