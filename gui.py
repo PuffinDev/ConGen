@@ -12,12 +12,27 @@ def gen_words():
     amt = s1.get()
 
     groups, weights, rewrites = cgg_parser.parse_cgg(t1.get("1.0", END))
-
     words = wordgen.generate_words(amt, pattern, groups, weights=weights, rewrites=rewrites)
-    pseudotext = pseudotextgen.generate_pseudotext(words)
+
+    if output_mode.get() == "pseudotext":
+        output = pseudotextgen.generate_pseudotext(words)
+    elif output_mode.get() == "space separated":
+        output = ""
+        for word in words:
+            output += word + " "
+    elif output_mode.get() == "one word per line":
+        output = ""
+        for word in words:
+            output += word + "\n"
 
     t2.delete("1.0", END)
-    t2.insert(END, pseudotext)
+    t2.insert(END, output)
+
+def select_all(*args):
+    t2.tag_add(SEL, "1.0", END)
+    t2.mark_set(INSERT, "1.0")
+    t2.see(INSERT)
+    return 'break'
 
 def highlight(*args):
     highlighting = {"->": "rewrite_arrow", "([A-Z]):": "group_name", "\d+": "weight", "-\d": "weight", "//": "comment"}
@@ -113,12 +128,21 @@ e1 = Entry(font=("", 13), text=pat)
 pat.set("CV(CV)(C)/VC(VC)(V)")
 e1.grid(columnspan=2)
 
-l2 = Label(text="Words", font=("", 11))
-l2.grid(columnspan=2)
+options = [
+    "pseudotext",
+    "space separated",
+    "one word per line"
+]
 
-s1 = Scale(orient=HORIZONTAL, from_=1, to=300)
+output_mode = StringVar()
+output_mode.set("pseudotext")
+
+o1 = OptionMenu(root, output_mode, *options)
+o1.grid(columnspan=2)
+
+s1 = Scale(orient=HORIZONTAL, from_=1, to=3000)
 s1.set(50)
-s1.grid(row=5, columnspan=2)
+s1.grid(columnspan=2)
 
 b1 = Button(text="Generate!", font=("", 13), command=gen_words)
 b1.grid(pady=(0, 20), columnspan=2)
@@ -127,6 +151,7 @@ l4 = Label(text="Output", font=("", 13))
 l4.grid(column=2, row=0, pady=(2, 0))
 
 t2 = Text(wrap=WORD, font=("", 14), width=43)
+t2.bind("<Control-Key-a>", select_all)
 t2.grid(column=2, row=1, padx=(10, 10), pady=(5, 10), rowspan=8)
 
 root.mainloop()
